@@ -121,6 +121,9 @@ static VideoBootStrap *bootstrap[] = {
 #ifdef SDL_VIDEO_DRIVER_N3DS
     &N3DS_bootstrap,
 #endif
+#if SDL_VIDEO_DRIVER_PS4
+	&PS4_bootstrap,
+#endif
 #ifdef SDL_VIDEO_DRIVER_KMSDRM
     &KMSDRM_bootstrap,
 #endif
@@ -241,6 +244,7 @@ static int SDL_CreateWindowTexture(SDL_VideoDevice *_this, SDL_Window *window, U
     SDL_GetWindowSizeInPixels(window, &w, &h);
 
     if (!data) {
+
         SDL_Renderer *renderer = NULL;
         const char *render_driver = NULL;
         const char *hint;
@@ -297,7 +301,7 @@ static int SDL_CreateWindowTexture(SDL_VideoDevice *_this, SDL_Window *window, U
         SDL_assert(renderer != NULL); /* should have explicitly checked this above. */
 
         /* Create the data after we successfully create the renderer (bug #1116) */
-        data = (SDL_WindowTextureData *)SDL_calloc(1, sizeof(*data));
+        data = (SDL_WindowTextureData *)SDL_calloc(1, sizeof(SDL_WindowTextureData));
         if (!data) {
             SDL_DestroyRenderer(renderer);
             return SDL_OutOfMemory();
@@ -1693,6 +1697,7 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
         h = 1;
     }
 
+
     /* Some platforms blow up if the windows are too large. Raise it later? */
     if (w > 16384) {
         w = 16384;
@@ -1722,6 +1727,7 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
             return NULL;
         }
     }
+
 
     if (flags & SDL_WINDOW_VULKAN) {
         if (!_this->Vulkan_CreateSurface) {
@@ -1754,6 +1760,7 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
         SDL_OutOfMemory();
         return NULL;
     }
+	
     window->magic = &_this->window_magic;
     window->id = _this->next_object_id++;
     window->x = x;
@@ -1823,6 +1830,7 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
     }
     _this->windows = window;
 
+
     if (_this->CreateSDLWindow && _this->CreateSDLWindow(_this, window) < 0) {
         SDL_DestroyWindow(window);
         return NULL;
@@ -1849,6 +1857,7 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
     flags = window->flags;
 #endif
 
+
     if (title) {
         SDL_SetWindowTitle(window, title);
     }
@@ -1856,6 +1865,7 @@ SDL_Window *SDL_CreateWindow(const char *title, int x, int y, int w, int h, Uint
 
     /* If the window was created fullscreen, make sure the mode code matches */
     SDL_UpdateFullscreenMode(window, FULLSCREEN_VISIBLE(window));
+
 
     return window;
 }
@@ -2761,7 +2771,7 @@ static SDL_Surface *SDL_CreateWindowFramebuffer(SDL_Window *window)
         /* We may have gone recursive and already created the surface */
         return window->surface;
     }
-
+	
     if (!SDL_PixelFormatEnumToMasks(format, &bpp, &Rmask, &Gmask, &Bmask, &Amask)) {
         return NULL;
     }

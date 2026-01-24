@@ -390,10 +390,12 @@ void SDL_LogMessageV(int category, SDL_LogPriority priority, const char *fmt, va
     int len;
     va_list aq;
 
+#ifndef PS4
     /* Nothing to do if we don't have an output function */
     if (!SDL_log_function) {
         return;
     }
+#endif
 
     /* Make sure we don't exceed array bounds */
     if ((int)priority < 0 || priority >= SDL_NUM_LOG_PRIORITIES) {
@@ -442,7 +444,11 @@ void SDL_LogMessageV(int category, SDL_LogPriority priority, const char *fmt, va
     }
 
     SDL_LockMutex(log_function_mutex);
+#ifdef PS4
+	printf(message);	// just fucking do it 
+#else
     SDL_log_function(SDL_log_userdata, category, priority, message);
+#endif
     SDL_UnlockMutex(log_function_mutex);
 
     /* Free only if dynamically allocated */

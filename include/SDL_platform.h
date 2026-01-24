@@ -215,6 +215,11 @@
 #define __PS2__ 1
 #endif
 
+#if defined(__ORBIS__) || defined(PS4)
+#undef __PS4__
+#define __PS4__ 1
+#endif
+
 /* The NACL compiler defines __native_client__ and __pnacl__
  * Ref: http://www.chromium.org/nativeclient/pnacl/stability-of-the-pnacl-bitcode-abi
  */

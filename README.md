@@ -1,5 +1,5 @@
 
-# Simple DirectMedia Layer (SDL) Version 2.0
+# Simple DirectMedia Layer (SDL) Version 2.0 (For OpenOrbis PS4 SDK)
 
 https://www.libsdl.org/
 
