@@ -3089,7 +3089,7 @@ endif()
 # We always need to have threads and timers around
 if(NOT HAVE_SDL_THREADS)
   # The emscripten platform has been carefully vetted to work without threads
-  if (EMSCRIPTEN)
+  if (EMSCRIPTEN OR PS4 OR ORBIS)
     set(SDL_THREADS_DISABLED 1)
     file(GLOB THREADS_SOURCES ${SDL2_SOURCE_DIR}/src/thread/generic/*.c)
     list(APPEND SOURCE_FILES ${THREADS_SOURCES})
