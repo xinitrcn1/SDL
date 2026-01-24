@@ -62,7 +62,7 @@
 #endif
 
 
-#if !defined(__NACL__) && !defined(__ORBIS__) && !defined(PS4)
+#if !defined(__NACL__) && !defined(__OPENORBIS__) && !defined(PS4)
 /* List of signals to mask in the subthreads */
 static const int sig_list[] = {
     SIGHUP, SIGINT, SIGQUIT, SIGPIPE, SIGALRM, SIGTERM, SIGCHLD, SIGWINCH,
@@ -164,7 +164,7 @@ void SDL_SYS_SetupThread(const char *name)
     }
 
    /* NativeClient does not yet support signals.*/
-#if !defined(__NACL__) && !defined(__ORBIS__) && !defined(PS4)
+#if !defined(__NACL__) && !defined(__OPENORBIS__) && !defined(PS4)
     /* Mask asynchronous signals for this thread */
     sigemptyset(&mask);
     for (i = 0; sig_list[i]; ++i) {

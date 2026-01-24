@@ -27,7 +27,6 @@
 #error You should not be here.
 #endif
 
-#if 0	// *FIXME* stfu wrong intellisense on VS/cmake
 #define SDL_SetError SDL_SetError_REAL
 #define SDL_Log SDL_Log_REAL
 #define SDL_LogVerbose SDL_LogVerbose_REAL

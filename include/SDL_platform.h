@@ -215,7 +215,7 @@
 #define __PS2__ 1
 #endif
 
-#if defined(__ORBIS__) || defined(PS4)
+#if defined(__OPENORBIS__) || defined(PS4)
 #undef __PS4__
 #define __PS4__ 1
 #endif
